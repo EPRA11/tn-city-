@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TN CITY ROLEPLAY — CFW Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --neon: #b026ff;
+  --neon-dim: #7a1ab3;
+  --indigo: #4b0082;
+  --black: #050505;
+  --dark: #0d0d0d;
+  --surface: rgba(75,0,130,0.12);
+  --border: rgba(176,38,255,0.25);
+  --text: #e8d5ff;
+  --muted: #a08abf;
+  --white: #ffffff;
+  --glow: 0 0 20px rgba(176,38,255,0.6), 0 0 60px rgba(176,38,255,0.2);
+  --glow-sm: 0 0 10px rgba(176,38,255,0.5);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--black);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  direction: rtl;
+}
+
+/* ── BACKGROUND ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(176,38,255,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 90%, rgba(75,0,130,0.18) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(176,38,255,0.02) 60px, rgba(176,38,255,0.02) 61px),
+    repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(176,38,255,0.02) 60px, rgba(176,38,255,0.02) 61px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SCANLINES ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HEADER ── */
+header {
+  position: relative;
+  text-align: center;
+  padding: 60px 20px 40px;
+  z-index: 2;
+  overflow: hidden;
+}
+
+.logo-wrap {
+  display: inline-block;
+  position: relative;
+}
+
+.logo-ring {
+  position: absolute;
+  inset: -30px;
+  border-radius: 50%;
+  border: 1px solid rgba(176,38,255,0.3);
+  animation: spin 8s linear infinite;
+}
+.logo-ring::before {
+  content: '';
+  position: absolute;
+  top: -2px; left: 50%;
+  width: 6px; height: 6px;
+  background: var(--neon);
+  border-radius: 50%;
+  box-shadow: var(--glow);
+  transform: translateX(-50%);
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.logo-icon {
+  width: 110px; height: 110px;
+  background: radial-gradient(circle at 40% 35%, rgba(176,38,255,0.4), rgba(75,0,130,0.8));
+  border-radius: 50%;
+  border: 2px solid var(--neon);
+  box-shadow: var(--glow), inset 0 0 30px rgba(176,38,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 28px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--white);
+  text-shadow: var(--glow-sm);
+  position: relative;
+  animation: pulse-logo 3s ease-in-out infinite;
+}
+
+@keyframes pulse-logo {
+  0%,100% { box-shadow: var(--glow), inset 0 0 30px rgba(176,38,255,0.2); }
+  50% { box-shadow: 0 0 40px rgba(176,38,255,0.9), 0 0 80px rgba(176,38,255,0.4), inset 0 0 40px rgba(176,38,255,0.3); }
+}
+
+h1.site-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(28px, 6vw, 56px);
+  font-weight: 900;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  text-shadow: var(--glow);
+  line-height: 1.1;
+}
+
+.site-subtitle {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(11px, 2vw, 14px);
+  color: var(--neon);
+  letter-spacing: 10px;
+  text-transform: uppercase;
+  margin-top: 8px;
+  opacity: 0.85;
+}
+
+.header-divider {
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--neon), transparent);
+  margin: 20px auto 0;
+  box-shadow: var(--glow-sm);
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(5,5,5,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 30px rgba(176,38,255,0.15);
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 16px 18px;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: color 0.3s;
+  letter-spacing: 0.5px;
+}
+
+.tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%; right: 50%;
+  height: 2px;
+  background: var(--neon);
+  box-shadow: var(--glow-sm);
+  transition: left 0.3s, right 0.3s;
+  border-radius: 2px;
+}
+
+.tab-btn:hover { color: var(--white); }
+.tab-btn.active { color: var(--neon); text-shadow: 0 0 10px rgba(176,38,255,0.7); }
+.tab-btn.active::after { left: 10%; right: 10%; }
+
+/* ── MAIN ── */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+  position: relative;
+  z-index: 2;
+}
+
+.tab-panel { display: none; animation: fadeIn 0.4s ease; }
+.tab-panel.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── GLASS CARD ── */
+.glass {
+  background: rgba(75,0,130,0.1);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.glass::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(176,38,255,0.6), transparent);
+}
+
+/* ── SECTION HEADING ── */
+.section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(18px, 4vw, 28px);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.section-title .icon {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--neon), var(--indigo));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: var(--glow-sm);
+}
+
+.section-desc {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 28px;
+  padding-right: 58px;
+}
+
+/* ── RULE CARDS ── */
+.rules-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 16px; margin-bottom: 24px; }
+
+.rule-card {
+  background: rgba(176,38,255,0.06);
+  border: 1px solid rgba(176,38,255,0.2);
+  border-radius: 12px;
+  padding: 22px;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+.rule-card:hover {
+  border-color: var(--neon);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(176,38,255,0.2);
+}
+
+.rule-number {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: var(--neon);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+  opacity: 0.8;
+}
+
+.rule-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.rule-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+/* ── SAFE ZONE BADGE ── */
+.safe-zones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+.zone-badge {
+  background: rgba(176,38,255,0.12);
+  border: 1px solid rgba(176,38,255,0.35);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.zone-badge::before { content: '🟢'; font-size: 11px; }
+
+/* ── TABLES ── */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  direction: rtl;
+}
+
+.styled-table thead tr {
+  background: linear-gradient(90deg, rgba(176,38,255,0.25), rgba(75,0,130,0.25));
+  border-bottom: 2px solid var(--neon);
+}
+
+.styled-table th {
+  padding: 14px 16px;
+  text-align: right;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--neon);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.styled-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid rgba(176,38,255,0.1);
+  color: var(--text);
+  vertical-align: middle;
+}
+
+.styled-table tbody tr {
+  transition: background 0.2s;
+}
+.styled-table tbody tr:hover {
+  background: rgba(176,38,255,0.08);
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.badge-red { background: rgba(255,50,50,0.15); color: #ff6666; border: 1px solid rgba(255,50,50,0.3); }
+.badge-orange { background: rgba(255,150,0,0.15); color: #ffaa33; border: 1px solid rgba(255,150,0,0.3); }
+.badge-yellow { background: rgba(255,220,0,0.15); color: #ffdd33; border: 1px solid rgba(255,220,0,0.3); }
+.badge-purple { background: rgba(176,38,255,0.2); color: #cc66ff; border: 1px solid rgba(176,38,255,0.4); }
+
+/* ── HEIST / NEGOTIATION ── */
+.neg-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(220px,1fr)); gap: 16px; margin-bottom: 28px; }
+.neg-card {
+  background: rgba(176,38,255,0.07);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.neg-card:hover { border-color: var(--neon); box-shadow: var(--glow-sm); transform: translateY(-3px); }
+.neg-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; letter-spacing: 1px; }
+.neg-amount { font-family: 'Orbitron', sans-serif; font-size: 26px; font-weight: 900; color: var(--neon); text-shadow: var(--glow-sm); }
+.neg-type { font-size: 13px; color: var(--text); margin-top: 6px; }
+
+.heist-req { display: flex; flex-direction: column; gap: 10px; }
+.req-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(176,38,255,0.06);
+  border: 1px solid rgba(176,38,255,0.15);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 14px;
+}
+.req-item .req-icon { font-size: 20px; }
+
+/* ── VIP STORE ── */
+.cars-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(260px,1fr)); gap: 20px; }
+
+.car-card {
+  background: rgba(75,0,130,0.15);
+  border: 1px solid rgba(176,38,255,0.2);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: all 0.35s;
+  position: relative;
+}
+
+.car-card:hover {
+  border-color: var(--neon);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(176,38,255,0.25);
+}
+
+.car-visual {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  background: linear-gradient(135deg, rgba(75,0,130,0.4), rgba(176,38,255,0.1));
+  position: relative;
+  overflow: hidden;
+}
+
+.car-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 100%, rgba(176,38,255,0.15), transparent 70%);
+}
+
+.car-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, var(--neon), var(--indigo));
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.car-body { padding: 18px; }
+.car-name { font-weight: 700; font-size: 16px; color: var(--white); margin-bottom: 4px; }
+.car-desc { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+.car-price {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  color: var(--neon);
+  font-weight: 700;
+  text-shadow: var(--glow-sm);
+  margin-bottom: 14px;
+}
+.car-price span { font-size: 12px; color: var(--muted); font-family: 'Poppins'; }
+
+.btn-buy {
+  display: block;
+  width: 100%;
+  background: linear-gradient(135deg, var(--neon), var(--indigo));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+  letter-spacing: 0.5px;
+}
+.btn-buy:hover { opacity: 0.85; transform: scale(1.02); }
+
+/* ── EMS RANKS ── */
+.ranks-timeline { position: relative; padding-right: 24px; }
+.ranks-timeline::before {
+  content: '';
+  position: absolute;
+  right: 4px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--neon), transparent);
+}
+
+.rank-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.rank-dot {
+  position: absolute;
+  right: -31px;
+  top: 12px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--neon);
+  box-shadow: var(--glow-sm);
+  border: 2px solid var(--black);
+  flex-shrink: 0;
+}
+
+.rank-card {
+  flex: 1;
+  background: rgba(176,38,255,0.06);
+  border: 1px solid rgba(176,38,255,0.15);
+  border-radius: 10px;
+  padding: 16px;
+  transition: all 0.3s;
+}
+.rank-card:hover { border-color: var(--neon); box-shadow: 0 4px 20px rgba(176,38,255,0.15); }
+
+.rank-name { font-weight: 600; font-size: 15px; color: var(--white); margin-bottom: 4px; }
+.rank-level { font-size: 11px; color: var(--neon); letter-spacing: 2px; margin-bottom: 6px; }
+.rank-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* ── CODE OF CONDUCT ── */
+.conduct-list { display: flex; flex-direction: column; gap: 10px; }
+.conduct-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: rgba(176,38,255,0.05);
+  border-right: 3px solid var(--neon);
+  border-radius: 0 8px 8px 0;
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.conduct-item .ci-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  color: var(--neon);
+  min-width: 24px;
+  padding-top: 2px;
+}
+
+/* ── APPLICATIONS ── */
+.apps-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 20px; }
+.app-card {
+  background: rgba(75,0,130,0.12);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 28px;
+  text-align: center;
+  transition: all 0.35s;
+  cursor: pointer;
+}
+.app-card:hover { border-color: var(--neon); transform: translateY(-5px); box-shadow: 0 16px 40px rgba(176,38,255,0.2); }
+
+.app-emoji { font-size: 52px; margin-bottom: 16px; display: block; }
+.app-name { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 8px; letter-spacing: 2px; }
+.app-desc { font-size: 13px; color: var(--muted); margin-bottom: 22px; line-height: 1.6; }
+
+.btn-apply {
+  display: inline-block;
+  background: transparent;
+  border: 1px solid var(--neon);
+  color: var(--neon);
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+}
+.btn-apply:hover {
+  background: var(--neon);
+  color: white;
+  box-shadow: var(--glow-sm);
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 28px 0;
+}
+
+/* ── INFO BOX ── */
+.info-box {
+  background: rgba(176,38,255,0.08);
+  border: 1px solid rgba(176,38,255,0.25);
+  border-radius: 10px;
+  padding: 16px 20px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.info-box strong { color: var(--neon); }
+
+/* ── BACK TO TOP ── */
+#btt {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  width: 46px; height: 46px;
+  background: linear-gradient(135deg, var(--neon), var(--indigo));
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: var(--glow-sm);
+  transition: opacity 0.3s, transform 0.3s;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+#btt.visible { opacity: 1; pointer-events: all; }
+#btt:hover { transform: translateY(-3px); }
+
+/* ── FOOTER ── */
+footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid var(--border);
+  background: rgba(5,5,5,0.8);
+  backdrop-filter: blur(10px);
+}
+
+.footer-logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: 4px;
+  margin-bottom: 16px;
+}
+.footer-logo span { color: var(--neon); }
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(176,38,255,0.1);
+  border: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+.social-btn:hover { background: rgba(176,38,255,0.2); border-color: var(--neon); color: var(--neon); }
+
+.footer-copy { font-size: 12px; color: var(--muted); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .glass { padding: 20px; }
+  .tab-btn { padding: 14px 12px; font-size: 12px; }
+  .cars-grid, .apps-grid { grid-template-columns: 1fr; }
+  .neg-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-wrap">
+    <div class="logo-ring"></div>
+    <img src="data:image/webp;base64,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" alt="TN City Roleplay Logo" style="width:140px;height:140px;border-radius:50%;display:block;margin:0 auto 20px;filter:drop-shadow(0 0 20px rgba(176,38,255,0.8)) drop-shadow(0 0 40px rgba(176,38,255,0.4));animation:pulse-logo 3s ease-in-out infinite;" />
+  </div>
+  <h1 class="site-title">TN CITY ROLEPLAY</h1>
+  <p class="site-subtitle">CFW Edition — دستور المدينة</p>
+  <div class="header-divider"></div>
+</header>
+
+<!-- NAV TABS -->
+<nav>
+  <div class="nav-inner">
+    <button class="tab-btn active" data-tab="rules">📋 القواعد العامة</button>
+    <button class="tab-btn" data-tab="police">👮 الشرطة</button>
+    <button class="tab-btn" data-tab="gangs">🔫 العصابات</button>
+    <button class="tab-btn" data-tab="justice">⚖️ وزارة العدل</button>
+    <button class="tab-btn" data-tab="ems">🏥 وزارة الصحة</button>
+    <button class="tab-btn" data-tab="vip">💎 متجر VIP</button>
+    <button class="tab-btn" data-tab="apps">🎯 التوظيف</button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+<!-- ══ TAB 1: GENERAL RULES ══ -->
+<section class="tab-panel active" id="tab-rules">
+
+  <!-- 1. ملاحظات تمهيدية -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">📌</div>ملاحظات تمهيدية</div>
+    <div class="conduct-list">
+      <div class="conduct-item"><span class="ci-num">01</span>هذه القوانين مُطبّقة داخل مدينة TN CITY CFW وعلى كل من يدخل عالم الرول بلاي.</div>
+      <div class="conduct-item"><span class="ci-num">02</span>أي قرار إداري يعتبر نهائيًا في حالات الطوارئ أو حماية سير اللعبة، ويتم توثيقه مع سبب القرار.</div>
+      <div class="conduct-item"><span class="ci-num">03</span>جميع اللاعبين ملزمون بقراءة القوانين والالتزام بها — عدم المعرفة لا تُعفي من العقوبة.</div>
+    </div>
+  </div>
+
+  <!-- 2. قواعد عامة -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">📋</div>القواعد العامة – السلوك</div>
+    <p class="section-desc">تسري هذه القواعد على جميع اللاعبين في جميع الأوقات داخل السيرفر.</p>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-number">RULE — 01</div>
+        <div class="rule-title">🤝 الاحترام العام</div>
+        <div class="rule-body">ممنوع أي إساءة أو سب أو تحقير أو تمييز على أساس دين، عرق، جنس، أو منطقة.<br><br><strong style="color:var(--neon)">العقوبة:</strong> تحذير ← سحب امتيازات الدردشة الصوتية ← باند مؤقت أو دائم حسب الشدة.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-number">RULE — 02</div>
+        <div class="rule-title">🔒 الخصوصية</div>
+        <div class="rule-body">ممنوع نشر محادثات أو تسجيلات صوتية أو صور لاعبين بدون موافقتهم.<br><br><strong style="color:var(--neon)">العقوبة:</strong> باند + حذف المحتوى.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-number">RULE — 03</div>
+        <div class="rule-title">⚠️ التحريض والقرصنة</div>
+        <div class="rule-body">ممنوع الدعوة لأفعال خارجية ضارة أو نشر طرق اختراق أو قرويات.<br><br><strong style="color:var(--neon)">العقوبة:</strong> باند دائم.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-number">RULE — 04</div>
+        <div class="rule-title">💰 الترويج التجاري</div>
+        <div class="rule-body">ممنوع الإعلان عن منتجات أو خدمات مقابل أموال حقيقية بدون إذن الإدارة.<br><br><strong style="color:var(--neon)">العقوبة:</strong> حذف الإعلان + تحذير ← باند متكرر.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. قواعد RP أساسية -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">🎭</div>قواعد رول بلاي أساسية</div>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-number">RULE — 05</div>
+        <div class="rule-title">🎭 الالتزام بالشخصية</div>
+        <div class="rule-body">كل لاعب يمثل شخصية بخلفية وقيم وسلوك. المحادثات والقرارات داخل الخريطة يجب أن تكون من منطلق الشخصية. ممنوع الـMetaGaming.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-number">RULE — 06</div>
+        <div class="rule-title">🚫 RDM — القتل العشوائي</div>
+        <div class="rule-body">قتل لاعب بدون سبب رول بلاي منطقي أو دون إنذار ممنوع.<br><br><strong style="color:var(--neon)">العقوبة:</strong> تحذير ← تحذير ثانٍ ← باند 3 أيام ← باند دائم للتكرار.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-number">RULE — 07</div>
+        <div class="rule-title">🚗 VDM — الدهس العشوائي</div>
+        <div class="rule-body">استخدام المركبة للقتل المتعمد خارج أي سيناريو مشروع ممنوع.<br><br><strong style="color:var(--neon)">العقوبة:</strong> إنذار ← إنذار ثانٍ ← باند مؤقت.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-number">RULE — 08</div>
+        <div class="rule-title">💪 PowerGaming</div>
+        <div class="rule-body">فرض نتائج غير منطقية على لاعبين آخرين أو إماتة شخص دون منحه فرصة للرد ممنوع.<br><br><strong style="color:var(--neon)">العقوبة:</strong> إنذار ← إنذار ثانٍ ← باند مؤقت.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-number">RULE — 09</div>
+        <div class="rule-title">🔮 MetaGaming</div>
+        <div class="rule-body">استخدام معلومات عرفتها خارج اللعبة (ديسكورد، مكالمة، ستريم) داخل السيناريو ممنوع.<br><br><strong style="color:var(--neon)">العقوبة:</strong> إنذار ← باند متكرر.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-number">RULE — 10</div>
+        <div class="rule-title">🎮 Fail RP / Broken RP</div>
+        <div class="rule-body">سلوك غير منطقي يكسر الانغماس، كعدم التصرف كشخص مجروح أو عدم الخضوع لتهديد بالسلاح.<br><br><strong style="color:var(--neon)">العقوبة:</strong> إنذار ← إنذار ثانٍ ← باند مؤقت.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-number">RULE — 11</div>
+        <div class="rule-title">💀 قواعد الوفاة (NLR)</div>
+        <div class="rule-body">بعد الوفاة، اللاعب يفقد ذكرى الحادثة. العودة للانتقام المباشر ممنوعة. الاستسلام يعني الامتثال الكامل — إطلاق النار بعده يُعتبر RDM.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-number">RULE — 12</div>
+        <div class="rule-title">🔧 استغلال ثغرات / غش</div>
+        <div class="rule-body">اكتشاف غليتش أو ثغرة يُبلَّغ عنها فورًا للإدارة. أي استغلال يؤدي لإلغاء النتائج.<br><br><strong style="color:var(--neon)">العقوبة:</strong> باند مؤقت أو دائم.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-number">RULE — 13</div>
+        <div class="rule-title">🏥 الإصابات والإنعاش</div>
+        <div class="rule-body">عند الإصابة الشديدة يدخل اللاعب حالة Unconscious ويُستخدم نظام المستشفى. الإنعاش يتم بمهنة طبية فقط.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-number">RULE — 14</div>
+        <div class="rule-title">🔫 الأسلحة في الأماكن العامة</div>
+        <div class="rule-body">حمل السلاح في الأماكن العامة غير مقبول.<br><br><strong style="color:var(--neon)">العقوبة:</strong> باند من يوم إلى ثلاثة أيام.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- الممنوعات -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">🚫</div>الممنوعات داخل المدينة</div>
+    <div class="conduct-list">
+      <div class="conduct-item"><span class="ci-num">01</span>يُمنع الرد على رسالة الأدمن.</div>
+      <div class="conduct-item"><span class="ci-num">02</span>يُمنع التلفيت من الفايت قبل وبعد الحادثة.</div>
+      <div class="conduct-item"><span class="ci-num">03</span>يُمنع الاختباء في (البنر أو منزل خاص أو أي مكان تمليك) أثناء مطاردة أو حالات خطف وغيرها.</div>
+      <div class="conduct-item"><span class="ci-num">04</span>يُمنع التلويت أثناء الحادثة قبل انتهائها من قِبل العصابات أو العسكري — يُسحب الغرض من المواطن.</div>
+      <div class="conduct-item"><span class="ci-num">05</span>يُمنع الإيموت (الانبطاح أو حركات أخرى) أثناء الفايت فقط.</div>
+      <div class="conduct-item"><span class="ci-num">06</span>يُمنع الاعتداء داخل السجن على العساكر + المستشفى + البنر.</div>
+      <div class="conduct-item"><span class="ci-num">07</span>يُمنع استخراج سلاح في أي منطقة آمنة بداعي الشقة — سيعرضك للـKick.</div>
+      <div class="conduct-item"><span class="ci-num">08</span>يُمنع لبس ملابس العصابات إذا كانت غير رسمية.</div>
+      <div class="conduct-item"><span class="ci-num">09</span>يُمنع التلويت في منطقة عصابة غير عصابتك في حال كان اتحاد العصابات.</div>
+      <div class="conduct-item"><span class="ci-num">10</span>ممنوع الخطف أو تهريب من المستشفى بأي شكل من الأشكال.</div>
+      <div class="conduct-item"><span class="ci-num">11</span>يُمنع تحالف العصابات إلا بأمر من مسؤول العصابات (الأب الروحي).</div>
+    </div>
+  </div>
+
+  <!-- المناطق الآمنة -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">🟢</div>المناطق الآمنة — Safe Zones</div>
+    <p class="section-desc">مناطق منزوعة السلاح — يُمنع فيها استخدام الأسلحة والقتل والتخريب والصدم بالمركبة والترصد وحمل اللاعبين من داخلها.</p>
+    <div class="safe-zones">
+      <div class="zone-badge">مركز التوظيف</div>
+      <div class="zone-badge">المستشفى</div>
+      <div class="zone-badge">الحديقة العامة</div>
+      <div class="zone-badge">مركز الشرطة</div>
+      <div class="zone-badge">ورشة التصليح</div>
+      <div class="zone-badge">المعرض المدني</div>
+      <div class="zone-badge">التجميع</div>
+      <div class="zone-badge">ايكيا</div>
+      <div class="zone-badge">السجن</div>
+      <div class="zone-badge">مناطق التصنيع</div>
+      <div class="zone-badge">المطاعم</div>
+      <div class="zone-badge">محل الملابس</div>
+      <div class="zone-badge">الشقق</div>
+      <div class="zone-badge">الحجز</div>
+      <div class="zone-badge">جميع الوظائف</div>
+    </div>
+  </div>
+
+  <!-- نظام التلويت -->
+  <div class="glass">
+    <div class="section-title"><div class="icon">⚡</div>نظام التلويت الجديد</div>
+    <div class="info-box" style="border-color:rgba(255,100,100,0.4);background:rgba(255,50,50,0.07)">
+      <strong style="color:#ff6666">⚠️ تحذير:</strong> يُمنع التلويت أثناء الفايت — أي تلويت أثناء الفايت يؤدي إلى باند مباشر.
+    </div>
+    <div class="conduct-list">
+      <div class="conduct-item"><span class="ci-num">📍</span>التلويت يكون فقط في: مناطق العصابة، فايت ضد عصابة أو شرطة في منطقة. يُمنع سحب شخص ميت خارج منطقة العصابة وإدخاله فيها + المدينة الثانية + الثالثة.</div>
+      <div class="conduct-item"><span class="ci-num">🪖</span><strong>تلويت العسكري يشمل فقط:</strong> الأسلحة بشكل عام — طلق — درع. <strong>ممنوع أخذ:</strong> راديو — كلبشة — تيزر — باج — داش كام.</div>
+      <div class="conduct-item"><span class="ci-num">👤</span><strong>تلويت مواطن يشمل:</strong> فلوس — سلاح — طلق — درع.</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ TAB 2: JUSTICE & POLICE ══ -->
+<section class="tab-panel" id="tab-police">
+
+  <!-- جدول العقوبات -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">⚖️</div>جدول الجرائم والعقوبات — وزارة العدل</div>
+    <p class="section-desc">العقوبات الرسمية بموجب دستور TN CITY CFW. السجن لا يتم إلا بعد صدور حكم رسمي من قاضٍ معتمد.</p>
+    <div style="overflow-x:auto">
+    <table class="styled-table">
+      <thead><tr><th>#</th><th>التهمة</th><th>مدة السجن</th></tr></thead>
+      <tbody>
+        <tr><td>01</td><td>مقاومة القوات</td><td><span class="badge badge-orange">10 أشهر</span></td></tr>
+        <tr><td>02</td><td>قتل عسكري</td><td><span class="badge badge-red">15 شهراً</span></td></tr>
+        <tr><td>03</td><td>قتل مدني</td><td><span class="badge badge-red">15 شهراً</span></td></tr>
+        <tr><td>04</td><td>سرقة</td><td><span class="badge badge-orange">10 أشهر</span></td></tr>
+        <tr><td>05</td><td>تجاوز أو استفزاز أو إهانة عساكر</td><td><span class="badge badge-yellow">7 أشهر</span></td></tr>
+        <tr><td>06</td><td>حمل سلاح دون إطلاق نار</td><td><span class="badge badge-yellow">5 أشهر</span></td></tr>
+        <tr><td>07</td><td>تهديد أو خطف مواطن</td><td><span class="badge badge-orange">9 أشهر</span></td></tr>
+        <tr><td>08</td><td>قيادة بتهور أو صدم ممتلكات عامة</td><td><span class="badge badge-yellow">5 أشهر</span></td></tr>
+        <tr><td>09</td><td>مشاجرة بين المواطنين</td><td><span class="badge badge-purple">3 أشهر</span></td></tr>
+        <tr><td>10</td><td>سرقة سيارة</td><td><span class="badge badge-yellow">5 أشهر</span></td></tr>
+        <tr><td>11</td><td>جرائم كبرى</td><td><span class="badge badge-red">إحالة للمحكمة العسكرية</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- قوانين الشرطة -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">👮</div>قوانين الشرطة — TN CITY CFW</div>
+    <div class="conduct-list">
+      <div class="conduct-item"><span class="ci-num">🔴</span>ممنوع إطلاق نار أو تيزر أو صدم احترافي بعد 5 دقائق + إذن العمليات.</div>
+      <div class="conduct-item"><span class="ci-num">⚡</span>في حال تحولت المطاردة على الأقدام — كل 5 ثوانٍ يحق التيزر. في حال سحب المجرم سلاحه يحق سحب السلاح الناري وإطلاق النار فوراً.</div>
+      <div class="conduct-item"><span class="ci-num">🤝</span>احترام المواطن واجب على جميع العساكر في جميع الظروف حتى مع المشتبهين.</div>
+      <div class="conduct-item"><span class="ci-num">🚫</span>يُمنع السب والشتم والاستفزاز بالكامل.</div>
+      <div class="conduct-item"><span class="ci-num">⚖️</span>يُسمح باستخدام القوة فقط بعد استنفاذ جميع الوسائل السلمية (التحذير — التفاوض — التهدئة).</div>
+      <div class="conduct-item"><span class="ci-num">🚷</span>يُحظر تجاوز الرتب العليا أو اتخاذ قرارات فردية في الحالات الحرجة.</div>
+      <div class="conduct-item"><span class="ci-num">🔒</span>ممنوع كلبشة مواطن دون رفع يده — عند عدم الاستماع يحق التيزر أو النطح ثم الكلبشة.</div>
+    </div>
+  </div>
+
+  <!-- خطوات التعامل مع المواطن -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">📋</div>خطوات التعامل مع المواطن</div>
+    <div class="heist-req">
+      <div class="req-item"><span class="req-icon">1️⃣</span><div><strong>التحية والتعريف بالنفس:</strong> يبدأ الشرطي بالتحية والتعريف باسمه ورتبته. مثال: "مساء الخير، أنا الضابط خالد من شرطة TN CITY."</div></div>
+      <div class="req-item"><span class="req-icon">2️⃣</span><div><strong>طلب الهوية:</strong> يحق للشرطي طلب الهوية إذا وُجد سبب قانوني (تفتيش روتيني، بلاغ، تواجد في منطقة ممنوعة).</div></div>
+      <div class="req-item"><span class="req-icon">3️⃣</span><div><strong>توضيح سبب التوقيف:</strong> إبلاغ المواطن بسبب التوقف بشكل واضح دون تهديد أو استفزاز.</div></div>
+      <div class="req-item"><span class="req-icon">4️⃣</span><div><strong>الاحترام المتبادل:</strong> استخدام لغة مهذبة — يُمنع السب أو التقليل من شأن المواطن مهما كانت الظروف.</div></div>
+    </div>
+  </div>
+
+  <!-- قانون الصف العسكري -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">🪖</div>قوانين الصف العسكري</div>
+    <div class="conduct-list">
+      <div class="conduct-item"><span class="ci-num">01</span>ممنوع دخول الصف بدون إذن.</div>
+      <div class="conduct-item"><span class="ci-num">02</span>ممنوع الكلام أثناء الصف بدون إذن.</div>
+      <div class="conduct-item"><span class="ci-num">03</span>ممنوع الحركة بدون إذن.</div>
+      <div class="conduct-item"><span class="ci-num">04</span>عند دخول الرتب العليا — جميع العساكر تحية.</div>
+      <div class="conduct-item"><span class="ci-num">05</span>عند الانسحاب من الصف — تحية ثم انسحاب.</div>
+      <div class="conduct-item"><span class="ci-num">06</span>جميع العساكر يلتزمون بتعليمات مسؤول الصف.</div>
+    </div>
+  </div>
+
+  <!-- قانون طلب الدعم -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">📡</div>قانون طلب الدعم العسكري</div>
+    <div class="info-box"><strong>تنبيه:</strong> يُمنع طلب الدعم في حالة الفنش الكامل لأنه يعتبر غير واقعي.</div>
+    <div class="conduct-list">
+      <div class="conduct-item"><span class="ci-num">✅</span>يُسمح طلب الدعم فقط إذا كان العسكري في حالة Knock وعند سحب الأجهزة التالية: داش كام — بدي كام — الرادار — الراديو.</div>
+    </div>
+  </div>
+
+  <!-- قانون التفاوض على الرهائن -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">🤝</div>قانون التفاوض على الرهائن</div>
+    <div class="info-box"><strong>ملاحظة:</strong> الرهينة العسكرية تُحسب بمقدار مواطنين اثنين.</div>
+    <div class="neg-grid">
+      <div class="neg-card">
+        <div class="neg-label">رهينة مواطن</div>
+        <div class="neg-amount">$5,000</div>
+        <div class="neg-type">+ هروب آمن</div>
+      </div>
+      <div class="neg-card">
+        <div class="neg-label">رهينة عسكري</div>
+        <div class="neg-amount">$10,000</div>
+        <div class="neg-type">+ هروب آمن + سلاح بالشروط</div>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:12px">
+      <strong>شروط السلاح عند خطف عسكري:</strong><br>
+      خاطف واحد ← سلاح خفيف واحد فقط<br>
+      خاطفان ← سلاحان خفيفان<br>
+      أكثر من ثلاثة ← ثلاثة أسلحة خفيفة<br><br>
+      <strong style="color:var(--neon)">ملاحظة: يحق لك طلب شيء واحد فقط مما ذُكر.</strong>
+    </div>
+    <div class="conduct-list" style="margin-top:12px">
+      <div class="conduct-item"><span class="ci-num">🚫</span>التفاوض على الرهائن أمر جاد — يُمنع التهاون به.</div>
+      <div class="conduct-item"><span class="ci-num">🚫</span>عند وجود الرهينة يُمنع الهجوم أو التصرف الفردي الذي يؤدي إلى مقتلها.</div>
+      <div class="conduct-item"><span class="ci-num">🚫</span>فشل التفاوض أو التهاون فيه يؤدي إلى محاسبة جميع العساكر.</div>
+    </div>
+  </div>
+
+  <!-- قانون تعامل مع حامل السلاح -->
+  <div class="glass">
+    <div class="section-title"><div class="icon">🔫</div>قانون التعامل مع شخص يحمل سلاح</div>
+    <div class="heist-req">
+      <div class="req-item"><span class="req-icon">⚠️</span>عند مشاهدة شخص يحمل سلاحاً ناريًا أو أبيض دون رفعه أو استخدامه — يجب إعطاء 3 تحذيرات متتالية.</div>
+      <div class="req-item"><span class="req-icon">⏱️</span>الفاصل الزمني بين كل تحذير: 20 ثانية.</div>
+      <div class="req-item"><span class="req-icon">🎯</span>إذا تجاهل الشخص التحذيرات — يُسقط مباشرةً.</div>
+      <div class="req-item"><span class="req-icon">🔍</span>لا يتم توقيف أو تفتيش أي شخص دون سبب واضح أو تعميم — يجب توضيح السبب في الراديو.</div>
+      <div class="req-item"><span class="req-icon">🚗</span>يُمنع تفتيش المركبة بدون إذن أو مبرر قانوني (بلاغ — اشتباه — سلوك عدواني).</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ TAB 3: GANGS & HEISTS ══ -->
+<section class="tab-panel" id="tab-gangs">
+
+  <!-- قوانين العصابات -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">🔫</div>قوانين العصابات والإجرام</div>
+    <p class="section-desc">يجب عليك فهم معنى الحياة الواقعية سواء كنت مجرماً أو رهينة وذلك بقياسها بالحياة الواقعية.</p>
+    <div class="conduct-list">
+      <div class="conduct-item"><span class="ci-num">01</span>يُمنع الاتفاق مع أي شخص ليصبح رهينة.</div>
+      <div class="conduct-item"><span class="ci-num">02</span>يُمنع طلب تاكسي أو عسكري أو ميكانيكي أو محامٍ وخطفه.</div>
+      <div class="conduct-item"><span class="ci-num">03</span>مدة رهن الرهينة 20 دقيقة — إلا في حال بدأ السيناريو يُلغى الوقت.</div>
+      <div class="conduct-item"><span class="ci-num">04</span>يُمنع التكرار الإجرامي من دون سبب مبرر.</div>
+      <div class="conduct-item"><span class="ci-num">05</span>يُمنع المتاجرة بالممنوعات في المناطق الآمنة — ويُمنع النصب والاحتيال فيها.</div>
+      <div class="conduct-item"><span class="ci-num">06</span>يُمنع سرقة المواطن إلا بسبب وجود عداوة.</div>
+      <div class="conduct-item"><span class="ci-num">07</span>حد المجموعات أو العائلات المسموح: 10 أشخاص فقط.</div>
+      <div class="conduct-item"><span class="ci-num">08</span>حد عدد أفراد العصابة الواحدة داخل السيرفر: 8 أشخاص فقط.</div>
+      <div class="conduct-item"><span class="ci-num">09</span>يُمنع تحالف الجماعات أو العصابات ضد الداخلية أو ضد مجموعة أو عصابة أخرى.</div>
+      <div class="conduct-item"><span class="ci-num">10</span>يُمنع منعاً باتاً خطف رهينة بغاية التوجه للسجن والتفاوض مع العساكر لإطلاق سراح أي سجين.</div>
+      <div class="conduct-item"><span class="ci-num">11</span>يُمنع الاعتداء على مفاوض الشرطة في السيناريو — ويُمنع الاعتداء على مفاوض المجرمين.</div>
+      <div class="conduct-item"><span class="ci-num">12</span>يُمنع مقاومة السلاح الناري بسلاح أبيض مهما كانت الحالة.</div>
+      <div class="conduct-item"><span class="ci-num">13</span>يُمنع إطلاق النار أو خطف العسكري في أي قضية مرورية.</div>
+      <div class="conduct-item"><span class="ci-num">14</span>يُمنع على أي فرد أو جماعة السرقة ثم الانتظار في نفس الموقع أو المعاودة وسرقته مرة أخرى.</div>
+      <div class="conduct-item"><span class="ci-num">15</span>يُمنع منعاً باتاً مشاركة الرهينة للخاطفين في نص السيناريو.</div>
+      <div class="conduct-item"><span class="ci-num">16</span>يُمنع تقليد ملابس إحدى العصابات.</div>
+      <div class="conduct-item"><span class="ci-num">17</span>يُمنع الخطف والتهديد في حال وجود مواطن أو اثنين من المدنيين أو أكثر.</div>
+      <div class="conduct-item"><span class="ci-num">18</span>يُمنع التعدي على سائق السطحة أو التاكسي أثناء مباشرته بمركبته الخاصة.</div>
+      <div class="conduct-item"><span class="ci-num">19</span>يجب عليك تعيين التدخل الخارجي قبل البدء بالسرقة.</div>
+      <div class="conduct-item"><span class="ci-num">20</span>في حال ظهور العد التنازلي للإعصار — يُمنع العمل الإجرامي.</div>
+    </div>
+  </div>
+
+  <!-- تسلسل السرقات -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">🏦</div>تسلسل السرقات</div>
+    <p class="section-desc">عدد العساكر يجب أن يكون +2 على عدد المجرمين الموجودين في السرقة.</p>
+    <div class="neg-grid">
+      <div class="neg-card">
+        <div class="neg-label">🏪 سرقة متجر</div>
+        <div class="neg-amount" style="font-size:18px">1 – 4</div>
+        <div class="neg-type">أشخاص</div>
+      </div>
+      <div class="neg-card">
+        <div class="neg-label">🏠 سرقة منزل</div>
+        <div class="neg-amount" style="font-size:18px">1 – 5</div>
+        <div class="neg-type">أشخاص</div>
+      </div>
+      <div class="neg-card">
+        <div class="neg-label">💍 سرقة مجوهرات</div>
+        <div class="neg-amount" style="font-size:18px">4 – 6</div>
+        <div class="neg-type">أشخاص</div>
+      </div>
+      <div class="neg-card">
+        <div class="neg-label">🚛 سرقة فليكا</div>
+        <div class="neg-amount" style="font-size:18px">2 – 6</div>
+        <div class="neg-type">أشخاص</div>
+      </div>
+      <div class="neg-card">
+        <div class="neg-label">🏛️ بنك مركزي</div>
+        <div class="neg-amount" style="font-size:18px">5 – 12</div>
+        <div class="neg-type">أشخاص</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- قوانين المخدرات -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">💊</div>قوانين المخدرات</div>
+    <div class="info-box"><strong>الأمر:</strong> <code style="background:rgba(176,38,255,0.2);padding:2px 8px;border-radius:4px;color:var(--neon)">/selldrugs</code> — لتفعيل بيع المخدرات.</div>
+    <div class="conduct-list">
+      <div class="conduct-item"><span class="ci-num">🚫</span>يُمنع ضرب مواطن أو فايت داخل معامل المخدرات — يعرضك للباند.</div>
+      <div class="conduct-item"><span class="ci-num">⏰</span>يُسمح للعساكر مداهمة أماكن تصنيع المخدرات فقط من الساعة 6 ليلاً حتى 3 فجراً — أي مداهمة خارج هذا الوقت تعرض للباند.</div>
+      <div class="conduct-item"><span class="ci-num">✅</span>إذا كنت داخل معمل تصنيع وداهموك العساكر — تقدر تدافع عن نفسك.</div>
+      <div class="conduct-item"><span class="ci-num">🚫</span>ممنوع التلويت داخل معمل المخدرات.</div>
+    </div>
+  </div>
+
+  <!-- قوانين العداوة والإعدام -->
+  <div class="glass">
+    <div class="section-title"><div class="icon">⚔️</div>قوانين العداوة والإعدام</div>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-title">👤 إعدام مواطن لمواطن</div>
+        <div class="rule-body">
+          • العداوة لا تقل عن شهر<br>
+          • تبدأ رسمياً بعد أسبوع ويجب تصوير العداوة<br>
+          • تبليغ الإدارة بالإعدام<br>
+          • الإعدام لا يكون علنياً أمام الناس — يكون سرياً
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-title">🪖 إعدام عسكري لعسكري</div>
+        <div class="rule-body">
+          • إثبات التهم وكل تهمة مسجلة وتُعطى للإدارة<br>
+          • إذا كان العسكري يتنكر كمواطن ويقوم بأعمال إجرامية مع العصابات ويثبت عليه: قتل مواطنين، قتل زملائه، السرقة
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-title">⚖️ إعدام عسكري لمواطن</div>
+        <div class="rule-body">
+          • تحت محكمة إلزامية<br>
+          • الأدلة لازمة على العساكر<br>
+          • إثبات تهم: إعدام مواطنين أو عسكري، تجارة بالأعضاء<br>
+          • أقل مدة سجن: 40 شهراً
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ TAB 7: JUSTICE ══ -->
+<section class="tab-panel" id="tab-justice">
+
+  <!-- المادة 1 -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">⚖️</div>دستور وزارة العدل — TN CITY CFW</div>
+    <div class="info-box">استنادًا إلى الصلاحيات المخوّلة بموجب النظام الإداري العام لمدينة TN CITY، تصدر وزارة العدل هذا الدستور للعمل به فور نشره. لا يحق لأي جهة أخرى إصدار حكم أو تنفيذ عقوبة بدون قاضٍ معتمد.</div>
+    <div class="section-title" style="font-size:16px;margin-bottom:10px;"><div class="icon" style="width:32px;height:32px;font-size:14px;">🏛️</div>الهيكل الإداري</div>
+    <div class="safe-zones">
+      <div class="zone-badge">⚖️ وزير العدل</div>
+      <div class="zone-badge">📋 نائب وزير العدل</div>
+      <div class="zone-badge">🏛️ رئيس المحكمة العليا</div>
+      <div class="zone-badge">👨‍⚖️ قاضٍ أول / قاضٍ</div>
+      <div class="zone-badge">📜 المستشار القانوني</div>
+      <div class="zone-badge">🖊️ كاتب ضبط / موظف شؤون قانونية</div>
+    </div>
+  </div>
+
+  <!-- صلاحيات القاضي -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">👨‍⚖️</div>صلاحيات القاضي</div>
+    <p class="section-desc">القاضي هو صاحب الكلمة النهائية في الحكم — يُمنع إصدار حكم بلا دليل أو المحاباة.</p>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div class="rule-title">✅ يحق للقاضي</div>
+        <div class="rule-body">• قبول أو رفض الأدلة<br>• تمديد التحقيق<br>• إلغاء أو تخفيف العقوبة<br>• إيقاف الشرطة عند التصرف الخاطئ</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-title">🚫 عقوبة الانحياز</div>
+        <div class="rule-body">إيقاف / سحب الرتبة / فصل نهائي حسب القرار الوزاري.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-title">🔒 حقوق المتهم</div>
+        <div class="rule-body">• معرفة سبب الاعتقال<br>• الاعتراض على الاتهام<br>• طلب إعادة التحقيق مرة واحدة فقط<br>• استئناف الحكم أمام قاضٍ أعلى درجة</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-title">📋 جلسات المحكمة</div>
+        <div class="rule-body">الكلام أثناء المحاكمة بإذن القاضي فقط. أي تدخل أو تهديد = إهانة المحكمة. الحكم يُكتب رسمياً ويُسجل في السجل القضائي.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- إجراءات التحقيق -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">🔍</div>إجراءات التحقيق</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="heist-two-col">
+      <div>
+        <p style="font-family:'Orbitron',sans-serif;font-size:12px;color:#ff6666;letter-spacing:2px;margin-bottom:10px;">❌ ممنوع</p>
+        <div class="conduct-list">
+          <div class="conduct-item" style="border-color:#ff4444"><span class="ci-num" style="color:#ff6666">✖</span>الضرب أو التعذيب</div>
+          <div class="conduct-item" style="border-color:#ff4444"><span class="ci-num" style="color:#ff6666">✖</span>السب والإهانة</div>
+          <div class="conduct-item" style="border-color:#ff4444"><span class="ci-num" style="color:#ff6666">✖</span>إجبار المتهم على الاعتراف</div>
+        </div>
+      </div>
+      <div>
+        <p style="font-family:'Orbitron',sans-serif;font-size:12px;color:#66ff99;letter-spacing:2px;margin-bottom:10px;">✅ مسموح</p>
+        <div class="conduct-list">
+          <div class="conduct-item" style="border-color:#44ff88"><span class="ci-num" style="color:#66ff99">✔</span>التقييد الأمني</div>
+          <div class="conduct-item" style="border-color:#44ff88"><span class="ci-num" style="color:#66ff99">✔</span>حجز السلاح</div>
+          <div class="conduct-item" style="border-color:#44ff88"><span class="ci-num" style="color:#66ff99">✔</span>الفصل بين المشتبهين</div>
+        </div>
+      </div>
+    </div>
+    <div class="info-box" style="margin-top:14px">
+      <strong>⚠️ مهم:</strong> إذا لم يوجد قاضٍ داخل السيرفر → يتم إيقاف التحقيق فوراً.
+    </div>
+  </div>
+
+  <!-- العقوبات -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">🔒</div>جدول العقوبات الرسمي</div>
+    <div style="overflow-x:auto">
+    <table class="styled-table">
+      <thead><tr><th>#</th><th>التهمة</th><th>العقوبة</th></tr></thead>
+      <tbody>
+        <tr><td>01</td><td>مقاومة القوات</td><td><span class="badge badge-orange">10 أشهر</span></td></tr>
+        <tr><td>02</td><td>قتل عسكري</td><td><span class="badge badge-red">15 شهراً</span></td></tr>
+        <tr><td>03</td><td>قتل مدني</td><td><span class="badge badge-red">15 شهراً</span></td></tr>
+        <tr><td>04</td><td>سرقة</td><td><span class="badge badge-orange">10 أشهر</span></td></tr>
+        <tr><td>05</td><td>تجاوز / استفزاز / إهانة عساكر</td><td><span class="badge badge-yellow">7 أشهر</span></td></tr>
+        <tr><td>06</td><td>حمل سلاح دون إطلاق نار</td><td><span class="badge badge-yellow">5 أشهر</span></td></tr>
+        <tr><td>07</td><td>تهديد أو خطف مواطن</td><td><span class="badge badge-orange">9 أشهر</span></td></tr>
+        <tr><td>08</td><td>قيادة بتهور / صدم ممتلكات عامة</td><td><span class="badge badge-yellow">5 أشهر</span></td></tr>
+        <tr><td>09</td><td>مشاجرة بين المواطنين</td><td><span class="badge badge-purple">3 أشهر</span></td></tr>
+        <tr><td>10</td><td>سرقة سيارة</td><td><span class="badge badge-yellow">5 أشهر</span></td></tr>
+        <tr><td>11</td><td>جرائم كبرى</td><td><span class="badge badge-red">إحالة للمحكمة العسكرية</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- دور الشرطة -->
+  <div class="glass">
+    <div class="section-title"><div class="icon">🚔</div>دور الشرطة — الداخلية</div>
+    <div class="info-box">الشرطة جهة اعتقال وتنفيذ وليست جهة حكم.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="heist-two-col">
+      <div>
+        <p style="font-family:'Orbitron',sans-serif;font-size:12px;color:#66ff99;margin-bottom:10px;">✅ يحق للشرطة</p>
+        <div class="conduct-list">
+          <div class="conduct-item" style="border-color:#44ff88"><span class="ci-num" style="color:#66ff99">✔</span>القبض على المطلوبين</div>
+          <div class="conduct-item" style="border-color:#44ff88"><span class="ci-num" style="color:#66ff99">✔</span>حماية موقع الجريمة</div>
+          <div class="conduct-item" style="border-color:#44ff88"><span class="ci-num" style="color:#66ff99">✔</span>نقل المتهم إلى القضاء</div>
+        </div>
+      </div>
+      <div>
+        <p style="font-family:'Orbitron',sans-serif;font-size:12px;color:#ff6666;margin-bottom:10px;">❌ يُمنع على الشرطة</p>
+        <div class="conduct-list">
+          <div class="conduct-item" style="border-color:#ff4444"><span class="ci-num" style="color:#ff6666">✖</span>إصدار حكم</div>
+          <div class="conduct-item" style="border-color:#ff4444"><span class="ci-num" style="color:#ff6666">✖</span>تنفيذ سجن نهائي بدون قرار قاضٍ</div>
+          <div class="conduct-item" style="border-color:#ff4444"><span class="ci-num" style="color:#ff6666">✖</span>افتعال تهم أو تزوير الأدلة</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ TAB 4: VIP STORE ══ -->
+<section class="tab-panel" id="tab-vip">
+  <div class="glass" style="margin-bottom:24px;">
+    <div class="section-title">
+      <div class="icon">💎</div>
+      متجر VIP — السيارات الحصرية
+    </div>
+    <p class="section-desc">مجموعة مختارة من أرقى السيارات الحصرية المتاحة فقط لأعضاء VIP. للشراء تواصل معنا عبر Discord.</p>
+  </div>
+
+  <div class="cars-grid">
+
+    <div class="car-card">
+      <div class="car-visual">🏎️<span class="car-tag">HOT</span></div>
+      <div class="car-body">
+        <div class="car-name">Nissan GTR R35</div>
+        <div class="car-desc">نيسان GTR — أيقونة السرعة اليابانية بأداء استثنائي</div>
+        <div class="car-price">$45,000 <span>/ مرة واحدة</span></div>
+        <button class="btn-buy" onclick="openDiscord()">🛒 شراء عبر Discord</button>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-visual">🚙<span class="car-tag">VIP</span></div>
+      <div class="car-body">
+        <div class="car-name">Mercedes G-Class</div>
+        <div class="car-desc">جي كلاس — الفخامة والقوة في تصميم لا يُضاهى</div>
+        <div class="car-price">$55,000 <span>/ مرة واحدة</span></div>
+        <button class="btn-buy" onclick="openDiscord()">🛒 شراء عبر Discord</button>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-visual">🚗<span class="car-tag">RARE</span></div>
+      <div class="car-body">
+        <div class="car-name">Lamborghini Urus</div>
+        <div class="car-desc">أوروس — سوبر SUV من إيطاليا بقلب رياضي شرس</div>
+        <div class="car-price">$75,000 <span>/ مرة واحدة</span></div>
+        <button class="btn-buy" onclick="openDiscord()">🛒 شراء عبر Discord</button>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-visual">🏁<span class="car-tag">VIP</span></div>
+      <div class="car-body">
+        <div class="car-name">Bugatti Chiron</div>
+        <div class="car-desc">شيرون — أسرع سيارة في العالم بـ 1500 حصان</div>
+        <div class="car-price">$120,000 <span>/ مرة واحدة</span></div>
+        <button class="btn-buy" onclick="openDiscord()">🛒 شراء عبر Discord</button>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-visual">🚀<span class="car-tag">LEGEND</span></div>
+      <div class="car-body">
+        <div class="car-name">Ferrari SF90</div>
+        <div class="car-desc">SF90 — هايبركار هجين يجمع بين التكنولوجيا والإثارة</div>
+        <div class="car-price">$95,000 <span>/ مرة واحدة</span></div>
+        <button class="btn-buy" onclick="openDiscord()">🛒 شراء عبر Discord</button>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-visual">⚡<span class="car-tag">NEW</span></div>
+      <div class="car-body">
+        <div class="car-name">Porsche 911 GT3 RS</div>
+        <div class="car-desc">GT3 RS — مهندسة للمضمار، مرخصة للشارع</div>
+        <div class="car-price">$65,000 <span>/ مرة واحدة</span></div>
+        <button class="btn-buy" onclick="openDiscord()">🛒 شراء عبر Discord</button>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-visual">🌟<span class="car-tag">VIP</span></div>
+      <div class="car-body">
+        <div class="car-name">Rolls Royce Cullinan</div>
+        <div class="car-desc">كولينان — الفخامة في أعلى صورها لملوك الطريق</div>
+        <div class="car-price">$85,000 <span>/ مرة واحدة</span></div>
+        <button class="btn-buy" onclick="openDiscord()">🛒 شراء عبر Discord</button>
+      </div>
+    </div>
+
+    <div class="car-card">
+      <div class="car-visual">🔥<span class="car-tag">HOT</span></div>
+      <div class="car-body">
+        <div class="car-name">Toyota Supra MK5</div>
+        <div class="car-desc">سوبرا — أسطورة الشارع بروح الدريفت الياباني</div>
+        <div class="car-price">$38,000 <span>/ مرة واحدة</span></div>
+        <button class="btn-buy" onclick="openDiscord()">🛒 شراء عبر Discord</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ TAB 5: EMS / MEDICAL ══ -->
+<section class="tab-panel" id="tab-ems">
+
+  <!-- شروط الانتساب -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">🏥</div>وزارة الصحة — TN CITY CFW</div>
+    <p class="section-desc">المرجع الإداري: ديوان وزارة الصحة | القائد العام: وزير الصحة</p>
+    <div style="overflow-x:auto">
+    <table class="styled-table">
+      <thead><tr><th>الشرط</th><th>الشرح</th></tr></thead>
+      <tbody>
+        <tr><td>العمر داخل الرول</td><td>20 سنة فما فوق</td></tr>
+        <tr><td>الالتزام</td><td>لبس الزي الطبي الرسمي داخل أوقات الدوام</td></tr>
+        <tr><td>التدريب</td><td>الخضوع للدورات الطبية والتدريبية قبل استلام المناوبة</td></tr>
+        <tr><td>الاحترام</td><td>التعامل باحترام مع المدنيين والعساكر والأطباء الآخرين</td></tr>
+        <tr><td><span class="badge badge-red">ممنوع</span></td><td>استخدام صلاحيات الطبيب للإساءة أو التدخل بأمور خارج الصلاحيات</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- نظام الرتب -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">🎖️</div>نظام الدرجات الوظيفية</div>
+    <div class="ranks-timeline">
+      <div class="rank-item"><div class="rank-dot"></div>
+        <div class="rank-card"><div class="rank-level">RANK I — أسبوع</div><div class="rank-name">🩺 متدرب</div><div class="rank-desc">يتعلم الأساسيات وتنفيذ أوامر المسؤول.</div></div>
+      </div>
+      <div class="rank-item"><div class="rank-dot"></div>
+        <div class="rank-card"><div class="rank-level">RANK II — أسبوعان</div><div class="rank-name">💉 ممرض</div><div class="rank-desc">استلام الحالات البسيطة داخل الطوارئ.</div></div>
+      </div>
+      <div class="rank-item"><div class="rank-dot"></div>
+        <div class="rank-card"><div class="rank-level">RANK III — شهر</div><div class="rank-name">🏥 ممرض أول</div><div class="rank-desc">مراقبة المرضى ومنسق الطاقم.</div></div>
+      </div>
+      <div class="rank-item"><div class="rank-dot"></div>
+        <div class="rank-card"><div class="rank-level">RANK IV — شهر</div><div class="rank-name">👨‍⚕️ طبيب مقيم</div><div class="rank-desc">استلام الحالات المتوسطة والحرجة.</div></div>
+      </div>
+      <div class="rank-item"><div class="rank-dot"></div>
+        <div class="rank-card"><div class="rank-level">RANK V — شهران</div><div class="rank-name">⭐ طبيب أخصائي</div><div class="rank-desc">مسؤول العمليات والإنعاش.</div></div>
+      </div>
+      <div class="rank-item"><div class="rank-dot"></div>
+        <div class="rank-card"><div class="rank-level">RANK VI — شهران</div><div class="rank-name">🎖️ رئيس قسم</div><div class="rank-desc">إدارة المناوبات وتنظيم الطاقم.</div></div>
+      </div>
+      <div class="rank-item"><div class="rank-dot"></div>
+        <div class="rank-card"><div class="rank-level">RANK VII — يُعيَّن</div><div class="rank-name">📋 نائب وزير</div><div class="rank-desc">متابعة الشؤون الإدارية.</div></div>
+      </div>
+      <div class="rank-item"><div class="rank-dot" style="background:gold;box-shadow:0 0 10px gold;"></div>
+        <div class="rank-card" style="border-color:rgba(255,215,0,0.4)"><div class="rank-level" style="color:gold;">RANK VIII — يُعيَّن</div><div class="rank-name">👑 وزير الصحة</div><div class="rank-desc">السلطة العليا — يضع اللوائح والتشريعات الطبية داخل السيرفر.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- الصلاحيات الرسمية -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">✅</div>الصلاحيات الرسمية للطبيب</div>
+    <div class="rules-grid">
+      <div class="rule-card"><div class="rule-title">🩹 معالجة الجرحى</div><div class="rule-body">إسعاف الجروح، الكسور، والإغماء.</div></div>
+      <div class="rule-card"><div class="rule-title">💊 إنعاش الحالات</div><div class="rule-body">استخدام جهاز الإنعاش داخل المستشفى فقط.</div></div>
+      <div class="rule-card"><div class="rule-title">🚑 نقل الحالات</div><div class="rule-body">نقل الحالات إلى المستشفى عند الضرورة.</div></div>
+      <div class="rule-card"><div class="rule-title">💉 صرف الأدوية</div><div class="rule-body">الصرف يكون عند فقدان المريض وعي — بدون مبالغة.</div></div>
+    </div>
+  </div>
+
+  <!-- الممنوعات -->
+  <div class="glass" style="margin-bottom:20px">
+    <div class="section-title"><div class="icon">🚫</div>ممنوعات وزارة الصحة</div>
+    <div style="overflow-x:auto">
+    <table class="styled-table">
+      <thead><tr><th>الفعل</th><th>العقوبة</th></tr></thead>
+      <tbody>
+        <tr><td>بيع علاجات أو استغلال المهنة</td><td><span class="badge badge-red">فصل نهائي + تحقيق</span></td></tr>
+        <tr><td>التواجد مع عصابات أو مساندة طرف مسلح</td><td><span class="badge badge-red">فصل فوري</span></td></tr>
+        <tr><td>حمل سلاح ثقيل داخل المستشفى</td><td><span class="badge badge-orange">إنذار أول — تكرارها فصل</span></td></tr>
+        <tr><td>التمثيل بالمصابين أو الإهمال المتعمد</td><td><span class="badge badge-orange">تحويل للجنة تحقيق</span></td></tr>
+        <tr><td>الدخول للمناطق العسكرية بدون إذن</td><td><span class="badge badge-yellow">إنذار إداري</span></td></tr>
+        <tr><td>تسجيل عمليات RDM تحت اسم المستشفى</td><td><span class="badge badge-red">فصل</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- تعليمات غرفة الطوارئ -->
+  <div class="glass">
+    <div class="section-title"><div class="icon">🚨</div>تعليمات غرفة الطوارئ والتدخل</div>
+    <div class="conduct-list">
+      <div class="conduct-item"><span class="ci-num">01</span>يُمنع إدخال السلاح مهما كان نوعه — يُستثنى العساكر أثناء المطاردات.</div>
+      <div class="conduct-item"><span class="ci-num">02</span>تُمنع المشاجرات ورفع الصوت داخل المستشفى.</div>
+      <div class="conduct-item"><span class="ci-num">03</span>الأولوية دائماً للحالات الحرجة.</div>
+      <div class="conduct-item"><span class="ci-num">04</span>تسجيل أسماء المصابين بتقرير يومي.</div>
+      <div class="conduct-item"><span class="ci-num">05</span>احترام وقت استلام المناوبة وتسليمه بدقة.</div>
+      <div class="conduct-item"><span class="ci-num">06</span>في حال وجود إطلاق نار حول المستشفى: إخلاء الطاقم لغرفة آمنة + الاتصال بقيادة الشرطة لتأمين الموقع.</div>
+      <div class="conduct-item"><span class="ci-num">07</span>يُسمح مرافقة العساكر في الحالات بشرط توجيه وحدة حماية للمسعف أثناء الحالة.</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ TAB 6: APPLICATIONS ══ -->
+<section class="tab-panel" id="tab-apps">
+  <div class="glass" style="margin-bottom:24px">
+    <div class="section-title">
+      <div class="icon">📋</div>
+      مركز التوظيف الرسمي
+    </div>
+    <p class="section-desc">انضم إلى فرق TN CITY وكن جزءاً من تجربة الروليبلاي الأرقى. اختر القسم المناسب وقدّم طلبك الآن.</p>
+  </div>
+
+  <div class="apps-grid">
+
+    <div class="app-card">
+      <span class="app-emoji">👮</span>
+      <div class="app-name">الشرطة</div>
+      <div class="app-desc">انضم إلى قوات الشرطة وحافظ على النظام والقانون. نبحث عن أفراد ملتزمين بالعدالة وقادرين على التعامل مع المواقف الضاغطة باحترافية.</div>
+      <a href="https://discord.gg/tncity" class="btn-apply">📝 تقديم الطلب</a>
+    </div>
+
+    <div class="app-card">
+      <span class="app-emoji">🚑</span>
+      <div class="app-name">الإسعاف EMS</div>
+      <div class="app-desc">كن جزءاً من الطاقم الطبي وأنقذ الأرواح. نبحث عن أشخاص لديهم روح العطاء والتعاون، مؤهلون لتقديم الرعاية الطبية الطارئة بمحترفية.</div>
+      <a href="https://discord.gg/tncity" class="btn-apply">📝 تقديم الطلب</a>
+    </div>
+
+    <div class="app-card">
+      <span class="app-emoji">⚙️</span>
+      <div class="app-name">فريق الإدارة</div>
+      <div class="app-desc">انضم إلى فريق الإدارة وساعد في بناء تجربة RP استثنائية. نبحث عن أشخاص خبرة، نضجاء، ومتفرغين لخدمة المجتمع.</div>
+      <a href="https://discord.gg/tncity" class="btn-apply">📝 تقديم الطلب</a>
+    </div>
+
+    <div class="app-card">
+      <span class="app-emoji">⚖️</span>
+      <div class="app-name">القضاء والمحاماة</div>
+      <div class="app-desc">مارس مهنة المحاماة أو القضاء داخل اللعبة. مثّل موكليك أمام المحكمة وساهم في تحقيق العدالة بالطرق الرسمية والدستورية.</div>
+      <a href="https://discord.gg/tncity" class="btn-apply">📝 تقديم الطلب</a>
+    </div>
+
+    <div class="app-card">
+      <span class="app-emoji">🏙️</span>
+      <div class="app-name">الحكومة المدنية</div>
+      <div class="app-desc">تولّ مناصب مدنية في الحكومة وأثّر في قرارات المدينة. يشمل ذلك مناصب البلدية، الوزارات، والمناصب الاستشارية.</div>
+      <a href="https://discord.gg/tncity" class="btn-apply">📝 تقديم الطلب</a>
+    </div>
+
+    <div class="app-card">
+      <span class="app-emoji">📰</span>
+      <div class="app-name">الإعلام والصحافة</div>
+      <div class="app-desc">غطِّ أحداث TN CITY بعين الصحفي المحترف. أنشئ محتوى، أجرِ مقابلات، وكن صوت الشعب في أكبر مدينة روليبلاي عربية.</div>
+      <a href="https://discord.gg/tncity" class="btn-apply">📝 تقديم الطلب</a>
+    </div>
+
+  </div>
+
+  <div class="glass" style="margin-top:24px; text-align:center;">
+    <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">لمزيد من الاستفسارات أو لمتابعة طلبك، تواصل معنا مباشرة على Discord</p>
+    <a href="https://discord.gg/tncity" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#5865F2,#4752c4);color:white;text-decoration:none;padding:13px 32px;border-radius:10px;font-weight:600;font-size:14px;transition:opacity 0.2s;" onmouseover="this.style.opacity=0.85" onmouseout="this.style.opacity=1">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.003.018.01.034.021.044a19.91 19.91 0 0 0 5.993 3.03.077.077 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+      الانضمام لـ Discord
+    </a>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">TN <span>CITY</span> RP</div>
+  <div class="social-links">
+    <a href="https://discord.gg/tncity" class="social-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.003.018.01.034.021.044a19.91 19.91 0 0 0 5.993 3.03.077.077 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+      Discord
+    </a>
+    <a href="#" class="social-btn">📘 Facebook</a>
+    <a href="#" class="social-btn">📱 TikTok</a>
+    <a href="#" class="social-btn">📸 Instagram</a>
+  </div>
+  <p class="footer-copy">© 2025 TN CITY ROLEPLAY — CFW Edition. جميع الحقوق محفوظة. | FiveM Community</p>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + target).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// Back to top
+const btt = document.getElementById('btt');
+window.addEventListener('scroll', () => {
+  btt.classList.toggle('visible', window.scrollY > 400);
+});
+
+// Discord link
+function openDiscord() {
+  window.open('https://discord.gg/tncity', '_blank');
+}
+
+// Responsive heist grid
+function fixHeistGrid() {
+  const cols = document.querySelectorAll('.heist-two-col');
+  cols.forEach(c => {
+    c.style.gridTemplateColumns = window.innerWidth < 600 ? '1fr' : '1fr 1fr';
+  });
+}
+fixHeistGrid();
+window.addEventListener('resize', fixHeistGrid);
+</script>
+</body>
+</html>
